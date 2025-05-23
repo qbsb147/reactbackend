@@ -7,6 +7,7 @@ import com.kh.reactbackend.enums.CommonEnums;
 import com.kh.reactbackend.service.MemberService;
 import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,11 @@ public class MemberController {
     @GetMapping("/{userNo}")
     public ResponseEntity<MemberDto.Response> getMember(@PathVariable Long userNo){
         return ResponseEntity.ok(memberService.findMember(userNo));
+    }
+
+    @GetMapping(params = "user_id")
+    public ResponseEntity<MemberDto.Response> findByUserId(@RequestParam String user_id){
+        return ResponseEntity.ok(memberService.findByUserId(user_id));
     }
 
     @GetMapping

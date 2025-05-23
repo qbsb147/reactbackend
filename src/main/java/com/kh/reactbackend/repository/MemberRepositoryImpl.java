@@ -31,6 +31,15 @@ public class MemberRepositoryImpl implements MemberRepository{
     }
 
     @Override
+    public Optional<Member> findByUserId(String userId) {
+        String query = "select m from Member m where m.userId = :userId";
+        Member member = entityManager.createQuery(query, Member.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+        return Optional.ofNullable(member);
+    }
+
+    @Override
     public void delete(Member member) {
         entityManager.remove(member);
     }

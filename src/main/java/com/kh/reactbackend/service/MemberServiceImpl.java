@@ -16,6 +16,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService{
+    @Override
+    public MemberDto.Response findByUserId(String userId) {
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
+        return MemberDto.Response.toDto(member);
+    }
 
     private final MemberRepository memberRepository;
 
