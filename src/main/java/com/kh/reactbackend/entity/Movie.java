@@ -1,8 +1,10 @@
 package com.kh.reactbackend.entity;
 
+import com.kh.reactbackend.enums.CommonEnums;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(indexes = @Index(name = "idx_movie_no", columnList = "movie_no", unique = true))
 public class Movie {
 
     @Id
@@ -21,7 +24,7 @@ public class Movie {
     @Column(name = "director", nullable = false, length = 50)
     private String director;
 
-    @Column(name = "movie_grade", nullable = false, precision = 2, scale = 1)
+    @Column(name = "movie_grade", nullable = false)
     private Float movieGrade;
 
     @Column(name="movie_title", nullable = false, length = 50)
@@ -29,6 +32,8 @@ public class Movie {
 
     @Column(name="movie_content", columnDefinition = "TEXT")
     private String movieContent;
+
+    private Integer count;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="movie_writer")
@@ -40,8 +45,21 @@ public class Movie {
     @Column(name ="change_name", nullable = false, length = 50)
     private String changeName;
 
+    @Column(name="create_date", nullable = false)
+    private LocalDateTime createDate;
+
+    private CommonEnums.status status;
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<MovieGenre> movieGenres = new ArrayList<>();
 
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = LocalDateTime.now();
+        this.count=0;
+        if(this.status == null){
+            this.status = CommonEnums.status.Y;
+        }
+    }
 }

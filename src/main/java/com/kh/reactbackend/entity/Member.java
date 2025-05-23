@@ -18,6 +18,7 @@ import static com.kh.reactbackend.enums.CommonEnums.status.Y;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(indexes = @Index(name = "idx_user_no", columnList = "user_no", unique = true))
 public class Member {
 
     @Id
@@ -63,5 +64,21 @@ public class Member {
     protected void onCreate(){
         this.createDate = LocalDateTime.now();
         this.status = Y;
+    }
+
+    public void updateMemberInfo(String userId,
+                                 String userPwd,
+                                 String userName,
+                                 String userNickname,
+                                 String phone,
+                                 Integer age,
+                                 CommonEnums.gender gender){
+        this.userId = userId;
+        this.userPwd = userPwd;
+        this.userName = userName;
+        this.userNickname = userNickname;
+        this.phone = phone;
+        this.age = age;
+        this.gender = gender;
     }
 }
