@@ -54,6 +54,7 @@ public class MemberDto {
     @Builder
     public static class Create{
 
+        private String image;
         private String user_id;
         private String user_pwd;
         private String user_name;
@@ -84,6 +85,7 @@ public class MemberDto {
     @Builder
     public static class Update{
 
+        private String image;
         private String user_id;
         private String user_pwd;
         private String user_name;

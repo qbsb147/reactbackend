@@ -26,6 +26,9 @@ public class Member {
     @Column(name = "user_no")
     private Long userNo;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
 
