@@ -26,8 +26,11 @@ public class Member {
     @Column(name = "user_no")
     private Long userNo;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "origin_name", length = 100)
+    private String originName;
+
+    @Column(name = "change_name", length = 100)
+    private String changeName;
 
     @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
@@ -73,6 +76,8 @@ public class Member {
                                  String userPwd,
                                  String userName,
                                  String userNickname,
+                                 String originName,
+                                 String changeName,
                                  String phone,
                                  Integer age,
                                  CommonEnums.gender gender){
@@ -80,8 +85,16 @@ public class Member {
         this.userPwd = userPwd;
         this.userName = userName;
         this.userNickname = userNickname;
+        this.originName = originName;
+        this.changeName = changeName;
         this.phone = phone;
         this.age = age;
         this.gender = gender;
     }
+
+    public void changeFile(String originName, String changeName) {
+        this.originName = originName;
+        this.changeName = changeName;
+    }
+
 }

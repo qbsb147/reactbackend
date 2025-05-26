@@ -6,6 +6,7 @@ import com.kh.reactbackend.enums.CommonEnums;
 import jakarta.persistence.Column;
 import lombok.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,6 +20,8 @@ public class MemberDto {
     @Builder
     public static class Response{
         private Long user_no;
+        private String origin_name;
+        private String change_name;
         private String user_id;
         private String user_pwd;
         private String user_name;
@@ -36,6 +39,8 @@ public class MemberDto {
                     .user_id(member.getUserId())
                     .user_pwd(member.getUserPwd())
                     .user_name(member.getUserName())
+                    .origin_name(member.getOriginName())
+                    .change_name(member.getChangeName())
                     .user_nickname(member.getUserNickname())
                     .phone(member.getPhone())
                     .age(member.getAge())
@@ -54,7 +59,7 @@ public class MemberDto {
     @Builder
     public static class Create{
 
-        private String image;
+        private MultipartFile file;
         private String user_id;
         private String user_pwd;
         private String user_name;
@@ -85,7 +90,7 @@ public class MemberDto {
     @Builder
     public static class Update{
 
-        private String image;
+        private MultipartFile file;
         private String user_id;
         private String user_pwd;
         private String user_name;

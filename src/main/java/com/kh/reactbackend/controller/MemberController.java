@@ -10,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,12 +26,16 @@ public class MemberController {
 
     @GetMapping("/{userNo}")
     public ResponseEntity<MemberDto.Response> getMember(@PathVariable Long userNo){
-        return ResponseEntity.ok(memberService.findMember(userNo));
+        MemberDto.Response member = memberService.findMember(userNo);
+        System.out.println("member = " + member.getChange_name());
+        return ResponseEntity.ok(member);
     }
 
-    @GetMapping(params = "user_id")
-    public ResponseEntity<MemberDto.Response> findByUserId(@RequestParam String user_id){
-        return ResponseEntity.ok(memberService.findByUserId(user_id));
+    @GetMapping(params = "userId")
+    public ResponseEntity<MemberDto.Response> findByUserId(@RequestParam String userId){
+        MemberDto.Response member = memberService.findByUserId(userId);
+        System.out.println("member.getChange_name() = " + member.getChange_name());
+        return ResponseEntity.ok(member);
     }
 
     @GetMapping
@@ -38,7 +44,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addMember(@RequestBody MemberDto.Create createDto){
+    public ResponseEntity<Void> addMember(@ModelAttribute MemberDto.Create createDto) throws IOException {
         memberService.createMember(createDto);
         return ResponseEntity.ok().build();
     }
