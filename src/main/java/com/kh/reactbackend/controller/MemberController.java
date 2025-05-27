@@ -1,19 +1,13 @@
 package com.kh.reactbackend.controller;
 
 import com.kh.reactbackend.dto.MemberDto;
-import com.kh.reactbackend.entity.Member;
-import com.kh.reactbackend.entity.Movie;
-import com.kh.reactbackend.enums.CommonEnums;
 import com.kh.reactbackend.service.MemberService;
-import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Parameter;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,7 +31,16 @@ public class MemberController {
         System.out.println("member.getChange_name() = " + member.getChange_name());
         return ResponseEntity.ok(member);
     }
-
+    @GetMapping("/uploads/{filename}")
+    public ResponseEntity<FileSystemResource> getFile(@PathVariable String filename) {
+        String UPLOAD_PATH = "C:/reactbackend/uploads/";
+        File file = new File(UPLOAD_PATH + filename);
+        if (file.exists()) {
+            return ResponseEntity.ok(new FileSystemResource(file));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @GetMapping
     public ResponseEntity<List<MemberDto.Response>> getAllMembers(){
         return ResponseEntity.ok(memberService.findAllMember());

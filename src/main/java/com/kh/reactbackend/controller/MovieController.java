@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/movies")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MovieController {
 
     private final MovieService movieService;
 
     @GetMapping
     public ResponseEntity<PageResponse<MovieDto.Response>> getPagingMovies(
-            @PageableDefault(size = 5, sort = "movieNo", direction = Sort.Direction.DESC) Pageable pageable){
+            @PageableDefault(size = 30, sort = "movieNo", direction = Sort.Direction.DESC) Pageable pageable){
         return ResponseEntity.ok(new PageResponse<>(movieService.getMovieList(pageable)));
     }
 

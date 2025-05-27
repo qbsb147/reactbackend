@@ -39,10 +39,10 @@ public class Movie {
     @JoinColumn(name="movie_writer")
     private Member member;
 
-    @Column(name = "origin_name", nullable = false, length = 30)
+    @Column(name = "origin_name",length = 30)
     private String originName;
 
-    @Column(name ="change_name", nullable = false, length = 50)
+    @Column(name ="change_name", length = 50)
     private String changeName;
 
     @Column(name="create_date", nullable = false)

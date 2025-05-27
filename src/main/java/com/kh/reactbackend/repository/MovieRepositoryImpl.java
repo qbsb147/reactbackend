@@ -21,17 +21,14 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Page<Movie> findByStatus(CommonEnums.status status, Pageable pageable) {
-        String query = "select m from Member m where m.status = :status";
+        String query = "select m from Movie m";
         List<Movie> movies = entityManager.createQuery(query, Movie.class)
-                .setParameter("status", status)
                 .setFirstResult((int)pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
-        String countQuery = "select m from Member m where m.status = :status";
+        String countQuery = "select count(m) from Movie m";
         Long totalCount = entityManager.createQuery(countQuery, Long.class)
-                .setParameter("status", status)
                 .getSingleResult();
-
         return new PageImpl<>(movies, pageable, totalCount);
     }
 

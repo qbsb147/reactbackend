@@ -20,6 +20,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Page<MovieDto.Response> getMovieList(Pageable pageable) {
         Page<Movie> page = movieRepository.findByStatus(CommonEnums.status.Y, pageable);
+        System.out.println("page = " + page.getTotalPages());
         return page.map(MovieDto.Response::toSimpleDto);
     }
 

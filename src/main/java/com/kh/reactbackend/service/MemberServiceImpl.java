@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService{
 
-    private final String UPLOAD_PATH = "C:\\reactbackend\\src\\main\\resources\\uploads";
+    private final String UPLOAD_PATH = "C:\\reactbackend\\uploads";
     private final MemberRepository memberRepository;
 
     @Override
@@ -56,12 +56,12 @@ public class MemberServiceImpl implements MemberService{
             changeName = UUID.randomUUID() + "_" + originName;
             System.out.println("changeName = " + changeName);
             File uploadDir = new File(UPLOAD_PATH);
-            if(!uploadDir.exists()){
-                uploadDir.mkdirs();
+            if(uploadDir.exists()){
+                uploadDir.mkdir();
             }
 
             createMember.getFile()
-                    .transferTo(new File(UPLOAD_PATH + changeName));
+                    .transferTo(new File(UPLOAD_PATH + File.separator + changeName));
         }
 
         Member member = createMember.toEntity();
