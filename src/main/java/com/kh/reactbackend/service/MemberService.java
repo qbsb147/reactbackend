@@ -12,7 +12,7 @@ public interface MemberService {
     MemberDto.Response findByUserId(String userId);
     List<MemberDto.Response> findAllMember();
     void createMember(MemberDto.Create createDto) throws IOException;
-    void updateMember(Long userNo, MemberDto.Update update);
+    void updateMember(Long userNo, MemberDto.Update update) throws IOException;
     void deleteMember(Long userNo);
 
 }

@@ -71,9 +71,32 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public void updateMember(Long userNo, MemberDto.Update update) {
+    public void updateMember(Long userNo, MemberDto.Update memberUpdate) throws IOException {
+
         Member member = memberRepository.findByUserNo(userNo)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
+
+        String originName = member.getOriginName();
+        String changeName = member.getChangeName();
+
+        if(memberUpdate.getFile()!= null && !memberUpdate.getFile().isEmpty()){
+            new File(UPLOAD_PATH+ File.separator + changeName).delete();
+            originName = memberUpdate.getFile().getOriginalFilename();
+            changeName = originName + "_" + UUID.randomUUID();
+
+            File uploadDir = new File(UPLOAD_PATH);
+
+            if(!uploadDir.exists()){
+                uploadDir.mkdir();
+            }
+
+            memberUpdate.getFile().transferTo(new File(UPLOAD_PATH + File.separator + changeName));
+
+        }
+
+        member.changeFile(originName,changeName);
+
+        System.out.println("originName = " + originName);
         member.updateMemberInfo(
                             member.getUserId(),
                             member.getUserPwd(),

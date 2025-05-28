@@ -31,16 +31,7 @@ public class MemberController {
         System.out.println("member.getChange_name() = " + member.getChange_name());
         return ResponseEntity.ok(member);
     }
-    @GetMapping("/uploads/{filename}")
-    public ResponseEntity<FileSystemResource> getFile(@PathVariable String filename) {
-        String UPLOAD_PATH = "C:/reactbackend/uploads/";
-        File file = new File(UPLOAD_PATH + filename);
-        if (file.exists()) {
-            return ResponseEntity.ok(new FileSystemResource(file));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
     @GetMapping
     public ResponseEntity<List<MemberDto.Response>> getAllMembers(){
         return ResponseEntity.ok(memberService.findAllMember());
@@ -55,7 +46,7 @@ public class MemberController {
     @PutMapping("/{userNo}")
     public ResponseEntity<Void> updateMember(
             @PathVariable Long userNo,
-            @RequestBody MemberDto.Update updateDto){
+            @ModelAttribute MemberDto.Update updateDto) throws IOException {
         memberService.updateMember(userNo, updateDto);
         return ResponseEntity.ok().build();
     }
