@@ -48,6 +48,8 @@ public class Movie {
     @Column(name="create_date", nullable = false)
     private LocalDateTime createDate;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private CommonEnums.status status;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,5 +63,9 @@ public class Movie {
         if(this.status == null){
             this.status = CommonEnums.status.Y;
         }
+    }
+
+    public void changeStatus(CommonEnums.status status){
+        this.status = status;
     }
 }

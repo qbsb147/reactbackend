@@ -2,6 +2,7 @@ package com.kh.reactbackend.controller;
 
 import com.kh.reactbackend.dto.MovieDto;
 import com.kh.reactbackend.dto.PageResponse;
+import com.kh.reactbackend.enums.CommonEnums;
 import com.kh.reactbackend.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +20,9 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<PageResponse<MovieDto.Response>> getPagingMovies(
+            @RequestParam CommonEnums.genre genre,
             @PageableDefault(size = 30, sort = "movieNo", direction = Sort.Direction.DESC) Pageable pageable){
-        return ResponseEntity.ok(new PageResponse<>(movieService.getMovieList(pageable)));
+        return ResponseEntity.ok(new PageResponse<>(movieService.getMovieList(pageable, genre)));
     }
 
     @DeleteMapping("/{movieNo}")

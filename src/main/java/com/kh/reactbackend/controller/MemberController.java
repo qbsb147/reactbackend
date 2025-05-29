@@ -28,7 +28,6 @@ public class MemberController {
     @GetMapping(params = "userId")
     public ResponseEntity<MemberDto.Response> findByUserId(@RequestParam String userId){
         MemberDto.Response member = memberService.findByUserId(userId);
-        System.out.println("member.getChange_name() = " + member.getChange_name());
         return ResponseEntity.ok(member);
     }
 

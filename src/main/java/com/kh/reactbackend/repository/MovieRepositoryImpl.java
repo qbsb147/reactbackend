@@ -21,24 +21,32 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Page<Movie> findByStatus(CommonEnums.status status, Pageable pageable) {
-        String query = "select m from Movie m";
+        String query = "select m from Movie m JOIN FETCH m.member join fetch m.movieGenres g join fetch g.genre where m.status=:status";
         List<Movie> movies = entityManager.createQuery(query, Movie.class)
+                .setParameter("status", status)
                 .setFirstResult((int)pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
-        String countQuery = "select count(m) from Movie m";
+        String countQuery = "select count(m) from Movie m where m.status=:status";
         Long totalCount = entityManager.createQuery(countQuery, Long.class)
+                .setParameter("status", status)
                 .getSingleResult();
         return new PageImpl<>(movies, pageable, totalCount);
     }
 
     @Override
     public Optional<Movie> findByMovieNo(Long movieNo) {
-        return Optional.empty();
+        String query = "select m from Movie m where m.movieNo=:movieNo and m.status=:status";
+        Movie movie = entityManager.createQuery(query,Movie.class)
+                .setParameter("movieNo", movieNo)
+                .setParameter("status", CommonEnums.status.Y)
+                .getSingleResult();
+        System.out.println("movie = " + movie);
+        return Optional.ofNullable(movie);
     }
 
     @Override
-    public String delete(Movie movie) {
-        return "";
+    public void save(Movie movie) {
+        entityManager.persist(movie);
     }
 }

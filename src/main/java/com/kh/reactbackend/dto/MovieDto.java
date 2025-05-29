@@ -26,6 +26,7 @@ public class MovieDto {
         private Float movie_grade;
         private String movie_title;
         private String movie_content;
+        private Long writer_no;
         private String user_id;
         private String user_name;
         private Integer count;
@@ -59,11 +60,20 @@ public class MovieDto {
             return Response.builder()
                     .movie_no(movie.getMovieNo())
                     .movie_title(movie.getMovieTitle())
+                    .director(movie.getDirector())
                     .change_name(movie.getChangeName())
                     .count(movie.getCount())
+                    .writer_no(movie.getMember()
+                            .getUserNo())
+                    .movie_content(movie.getMovieContent())
+                    .movie_grade(movie.getMovieGrade())
                     .create_date(movie.getCreateDate())
                     .user_id(movie.getMember()
-                            .getUserId())
+                                    .getUserId())
+                    .genres(movie.getMovieGenres()
+                                .stream()
+                                .map(boardGenre -> boardGenre.getGenre().getGenreName())
+                                .toList())
                     .build();
         }
 

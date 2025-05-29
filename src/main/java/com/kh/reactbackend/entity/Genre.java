@@ -22,6 +22,7 @@ public class Genre {
     @Column(name = "genre_no")
     private Long genreNo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "genre_name", nullable = false)
     private CommonEnums.genre genreName;
 

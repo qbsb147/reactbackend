@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface MovieRepository {
     Page<Movie> findByStatus(CommonEnums.status status, Pageable pageable);
     Optional<Movie> findByMovieNo(Long movieNo);
-    String delete(Movie movie);
+    void save(Movie movie);
 }

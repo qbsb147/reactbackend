@@ -53,6 +53,7 @@ public class Member {
     @Column(name = "gender", nullable = false)
     private CommonEnums.gender gender;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "status", nullable = false)
     private CommonEnums.status status;
 

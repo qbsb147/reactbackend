@@ -18,9 +18,8 @@ public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
 
     @Override
-    public Page<MovieDto.Response> getMovieList(Pageable pageable) {
+    public Page<MovieDto.Response> getMovieList(Pageable pageable, CommonEnums.genre genre) {
         Page<Movie> page = movieRepository.findByStatus(CommonEnums.status.Y, pageable);
-        System.out.println("page = " + page.getTotalPages());
         return page.map(MovieDto.Response::toSimpleDto);
     }
 
@@ -28,7 +27,8 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteMovie(Long movieNo) {
         Movie movie = movieRepository.findByMovieNo(movieNo)
-                .orElseThrow(()-> new IllegalArgumentException("해당 유저를 찾을 수가 없습니다."));
-        movieRepository.delete(movie);
+                .orElseThrow(()-> new IllegalArgumentException("해당 영화를 찾을 수가 없습니다."));
+        movie.changeStatus(CommonEnums.status.N);
+        movieRepository.save(movie);
     }
 }
