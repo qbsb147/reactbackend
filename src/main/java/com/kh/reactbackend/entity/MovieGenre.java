@@ -8,7 +8,9 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "movie_genre", indexes = @Index(name = "idx_movie_genre", columnList = "movie_no, genre_no", unique = true))
+@Table(name = "movie_genre",
+        indexes = {@Index(name = "idx_movie", columnList = "movie_no"),
+                @Index(name = "idx_genre", columnList = "genre_no")})
 public class MovieGenre {
 
     @Id

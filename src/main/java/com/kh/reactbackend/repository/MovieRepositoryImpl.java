@@ -22,6 +22,8 @@ public class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Page<Movie> findByStatus(CommonEnums.status status, Pageable pageable) {
         String query = "select m from Movie m JOIN FETCH m.member join fetch m.movieGenres g join fetch g.genre where m.status=:status";
+//        String query = "select m from Movie m JOIN m.member join m.movieGenres g join g.genre where m.status=:status";
+//        String query = "select m from Movie m where m.status=:status";
         List<Movie> movies = entityManager.createQuery(query, Movie.class)
                 .setParameter("status", status)
                 .setFirstResult((int)pageable.getOffset())

@@ -12,9 +12,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(indexes = {
-        @Index(name="idx_genre_no", columnList = "genre_no", unique = true)
-})
 public class Genre {
 
     @Id

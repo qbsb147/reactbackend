@@ -18,7 +18,6 @@ import static com.kh.reactbackend.enums.CommonEnums.status.Y;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(indexes = @Index(name = "idx_user_no", columnList = "user_no", unique = true))
 public class Member {
 
     @Id

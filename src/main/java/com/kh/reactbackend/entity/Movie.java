@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(indexes = @Index(name = "idx_movie_no", columnList = "movie_no", unique = true))
 public class Movie {
 
     @Id
